@@ -11,18 +11,20 @@ const Author = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchAuthor() {
-      try {
-        const { data } = await axios.get(
-          `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${id}`
-        );
-        setAuthor(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching author:", error);
-        setLoading(false);
-      }
+   async function fetchAuthor() {
+    setLoading(true);
+    try {
+      const { data } = await axios.get(
+        `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${id}`
+      );
+      console.log("API DATA:", data); // OPEN YOUR CONSOLE (F12) TO SEE THIS
+      setAuthor(data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching author:", error);
+      setLoading(false);
     }
+  }
     fetchAuthor();
   }, [id]);
 
@@ -44,8 +46,10 @@ const Author = () => {
                 <div className="d_profile de-flex">
                   <div className="de-flex-col">
                     <div className="profile_avatar">
-                      <img src={author.authorImage} alt={author.authorName} />
-                      <i className="fa fa-check"></i>
+<img 
+  src={author.authorImage || author.author_image || author.avatar || author.image} 
+  alt={author.authorName} 
+/>                 <i className="fa fa-check"></i>
                       <div className="profile_name">
                         <h4>
                           {author.authorName}

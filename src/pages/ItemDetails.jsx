@@ -44,27 +44,60 @@ const ItemDetails = () => {
             </div>
 
             <div className="col-md-6">
-              <div className="item_details_info">
-                <h2>{item.title}</h2>
-                <div className="item_info_counts">
-                  <div className="item_info_views" style={{ marginRight: "15px", display: "inline-block" }}>
-                    <i className="fa fa-eye" style={{ marginRight: "5px" }}></i>
-                    {item.views}
-                  </div>
-                  <div className="item_info_likes" style={{ display: "inline-block" }}>
-                    <i className="fa fa-heart" style={{ marginRight: "5px" }}></i>
-                    {item.likes}
-                  </div>
-                </div>
-                <p style={{ marginTop: "20px" }}>{item.description}</p>
-                <h6>Price</h6>
-                <div className="nft-item-price">
-                  <h3>{item.price} ETH</h3>
-                </div>
-                <Link to="/" className="btn-main" style={{ marginTop: "20px", display: "inline-block" }}>
-                  Back to Marketplace
-                </Link>
-              </div>
+            <div className="item_details_info">
+  <h2>{item.title}</h2>
+
+  {/* Top: Stats, Description, and Price */}
+  <div className="item_info_counts" style={{ margin: "20px 0" }}>
+    <div className="item_info_views" style={{ marginRight: "15px", display: "inline-block" }}>
+      <i className="fa fa-eye"></i> {item.views}
+    </div>
+    <div className="item_info_likes" style={{ display: "inline-block" }}>
+      <i className="fa fa-heart"></i> {item.likes}
+    </div>
+  </div>
+
+  <p>{item.description}</p>
+
+  <h6>Price</h6>
+  <div className="nft-item-price" style={{ marginBottom: "30px" }}>
+    <h3>{item.price} ETH</h3>
+  </div>
+
+  {/* Bottom: Owner and Creator */}
+  <div className="item_author_wrap" style={{ display: "flex", borderTop: "1px solid #eee", paddingTop: "20px" }}>
+    
+    <div className="item_author" style={{ flex: 1, display: "flex", alignItems: "center" }}>
+      <div className="author_list_pp">
+        <Link to={`/author/${item.ownerId}`}>
+          <img className="lazy" src={item.ownerImage} alt={item.ownerName} />
+          <i className="fa fa-check"></i>
+        </Link>
+      </div>
+      <div className="author_list_info" style={{ marginLeft: "15px" }}>
+        <span>Owner</span><br />
+        <Link to={`/author/${item.ownerId}`}>{item.ownerName}</Link>
+      </div>
+    </div>
+
+    <div className="item_author" style={{ flex: 1, display: "flex", alignItems: "center" }}>
+      <div className="author_list_pp">
+        <Link to={`/author/${item.creatorId}`}>
+          <img className="lazy" src={item.creatorImage} alt={item.creatorName} />
+          <i className="fa fa-check"></i>
+        </Link>
+      </div>
+      <div className="author_list_info" style={{ marginLeft: "15px" }}>
+        <span>Creator</span><br />
+        <Link to={`/author/${item.creatorId}`}>{item.creatorName}</Link>
+      </div>
+    </div>
+  </div>
+
+  <Link to="/" className="btn-main" style={{ marginTop: "30px", display: "inline-block" }}>
+    Back to Marketplace
+  </Link>
+</div>
             </div>
           </div>
         </div>
