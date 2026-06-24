@@ -7,6 +7,9 @@ import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/owl.carousel";
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
+import { useParams } from "react-router-dom";
+
+
 
 const CountdownTimer = ({ expiryDate }) => {
   const [timeLeft, setTimeLeft] = useState(""); 
@@ -43,11 +46,13 @@ const CountdownTimer = ({ expiryDate }) => {
 const NewItems = () => {
 const [collections, setCollections] = useState([]);
 const [loading, setLoading] = useState(true); 
+const { id } = useParams();
+const [item, setItem] = useState({});
 
 
  useEffect(() => {
-    fetch('https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems')
-    .then((response) => {
+fetch('https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems')    
+.then((response) => {
       if (!response.ok) {
           throw new Error('Network response processed an error. Please try again later');
         }
@@ -64,7 +69,7 @@ const [loading, setLoading] = useState(true);
   }, []); 
 
 
-
+  
 
 const  newItemsOptions = {
   loop: true, 
@@ -104,7 +109,7 @@ const  newItemsOptions = {
               </div>
             ))
           ) : (
-            <OwlCarousel className="owl-theme" {... newItemsOptions}>
+            <OwlCarousel className="owl-theme" {...newItemsOptions}>
               {collections.map((item) => (
                 <div className="nft__item" key={item.id}>
                   <div className="author_list_pp">
