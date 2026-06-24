@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 // Assuming you have AuthorItems and AuthorBanner components
 import AuthorItems from "../components/author/AuthorItems";
 import AuthorBanner from "../components/author/AuthorBanner";
-
 const Author = () => {
   const [author, setAuthor] = useState(null);
   const { id } = useParams();
