@@ -10,6 +10,7 @@ import 'owl.carousel/dist/assets/owl.theme.default.css';
 const HotCollections = () => {
   const [collections, setCollections] = useState([]);
   const [loading, setLoading] = useState(true); 
+
   useEffect(() => {
     fetch('https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections')
       .then((response) =>  {
@@ -28,8 +29,6 @@ const HotCollections = () => {
       });
   }, []); 
 
-   
-
   const options = {
     loop: true, 
     margin: 10, 
@@ -37,40 +36,26 @@ const HotCollections = () => {
     dots: false, 
     smartSpeed: 500, 
     responsive: {
-      0: {
-        items: 1, 
-      },
-      600: {
-        items: 2, 
-      },
-      768: {
-        items: 3, 
-      },
-      1024: {
-        items: 4,
-      },
+      0: { items: 1 },
+      600: { items: 2 },
+      768: { items: 3 },
+      1024: { items: 4 },
     },
-  }
+  };
   
-
   return (
     <section id="section-collections" className="no-bottom">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
-            {/* 3. Conditional Switch: If loading, map out the blank skeleton cards */}
+            
             {loading ? (
               <div className="row">
-                {[1, 2, 3, 4].map((index) => (
+                {new Array(4).fill(0).map((_, index) => (
                   <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={index}>
                     <div className="nft_coll" style={{ background: "#fff", border: "1px solid #eee", padding: "15px", borderRadius: "8px" }}>
-                      {/* NFT Image Area Placeholder */}
                       <div className="skeleton-box" style={{ width: "100%", height: "200px", borderRadius: "8px" }}></div>
-                      
-                      {/* Author Avatar Circle Placeholder */}
                       <div className="skeleton-box" style={{ width: "50px", height: "50px", borderRadius: "50%", margin: "-25px auto 0 auto", border: "2px solid #fff" }}></div>
-                      
-                      {/* Info Text Bars */}
                       <div style={{ padding: "15px 0 0 0", textAlign: "center" }}>
                         <div className="skeleton-box" style={{ width: "70%", height: "18px", margin: "0 auto 10px auto", borderRadius: "4px" }}></div>
                         <div className="skeleton-box" style={{ width: "40%", height: "14px", margin: "0 auto", borderRadius: "4px" }}></div>
@@ -81,23 +66,23 @@ const HotCollections = () => {
               </div>
             ) : (
               collections.length > 0 && (
-                <OwlCarousel className="owl-theme" {...options}>
+                <OwlCarousel key={collections.length} className="owl-theme" {...options}>
                   {collections.map((item) => (
                     <div key={item.id} className="nft-slider-item">
                       <div className="nft_coll" style={{ margin: "0 10px" }}>
                         <div className="nft_wrap">
-                          <Link to="/item-details">
-                            <img src={item.nftImage} className="lazy img-fluid" alt={item.title} />
+                          <Link to={`/item-details/${item.nftId}`}>
+                            <img src={item.nftImage} className="img-fluid" alt={item.title} />
                           </Link>
                         </div>
                         <div className="nft_coll_pp">
-                          <Link to="/author">
-                            <img className="lazy pp-coll" src={item.authorImage} alt="" />
+                          <Link to={`/author/${item.authorId}`}>
+                            <img className="pp-coll" src={item.authorImage} alt="" />
                           </Link>
                           <i className="fa fa-check"></i>
                         </div>
                         <div className="nft_coll_info">
-                          <Link to="/item-details">
+                          <Link to={`/item-details/${item.nftId}`}>
                             <h4>{item.title}</h4>
                           </Link>
                           <span>ERC-{item.code}</span>
@@ -108,8 +93,8 @@ const HotCollections = () => {
                 </OwlCarousel>
               )
             )}
+            
           </div>
-
         </div>
       </div>
     </section>
