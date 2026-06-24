@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AuthorImage from "../../images/author_thumbnail.jpg";
 import nftImage from "../../images/nftImage.jpg";
-import Slider from "react-slick"; 
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/owl.carousel";
 import 'owl.carousel/dist/assets/owl.carousel.css';
