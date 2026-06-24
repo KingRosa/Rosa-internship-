@@ -1,40 +1,66 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import AuthorImage from "../../images/author_thumbnail.jpg";
+import nftImage from "../../images/nftImage.jpg";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-// Assuming you have AuthorItems and AuthorBanner components
-import AuthorItems from "../components/author/AuthorItems";
-import AuthorBanner from "../components/author/AuthorBanner";
-const Author = () => {
-  const [author, setAuthor] = useState(null);
-  const { id } = useParams();
 
-  async function fetchAuthor() {
-    const { data } = await axios.get(
-      `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${id}`
-    );
-    setAuthor(data);
-  }
+const AuthorItems = ({ authorId }) => {
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchAuthor();
-  }, [id]);
+    async function fetchAuthorItems() {
+      try {
+        setLoading(true);
+        const { data } = await axios.get(
+          `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`
+        );
+        setItems(data.nftCollection); // Ensure this matches your API response structure
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching author items:", error);
+        setLoading(false);
+      }
+    }
+    
+    if (authorId) {
+      fetchAuthorItems();
+    }
+  }, [authorId]);
 
-  if (!author) return <p>Loading...</p>;
+  if (loading) return <div className="text-center">Loading items...</div>;
 
   return (
-    <div id="wrapper">
-      <div className="no-bottom no-top" id="content">
-        <section id="profile_banner" className="no-bottom no-top">
-          <AuthorBanner author={author} />
-        </section>
-        <section className="container">
-          <div className="row">
-            <AuthorItems author={author} />
-          </div>
-        </section>
+    <div className="de_tab_content">
+      <div className="tab-1">
+        <div className="row">
+          {items.map((item) => (
+            <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={item.id}>
+              <div className="nft__item">
+                <div className="author_list_pp">
+                  <Link to="">
+                    <img className="lazy" src={item.authorImage} alt="" />
+                    <i className="fa fa-check"></i>
+                  </Link>
+                </div>
+                <div className="nft__item_wrap">
+                  <Link to={`/item-details/${item.id}`}>
+                    <img src={item.nftImage} className="lazy nft__item_preview" alt="" />
+                  </Link>
+                </div>
+                <div className="nft__item_info">
+                  <Link to={`/item-details/${item.id}`}>
+                    <h4>{item.title}</h4>
+                  </Link>
+                  <div className="nft__item_price">{item.price} ETH</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
-export default Author;
+export default AuthorItems;
