@@ -30,7 +30,7 @@ const AuthorItems = ({ authorId }) => {
 
   if (loading) return <div className="text-center">Loading items...</div>;
 
-  return (
+return (
     <div className="de_tab_content">
       <div className="tab-1">
         <div className="row">
@@ -38,21 +38,25 @@ const AuthorItems = ({ authorId }) => {
             <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={item.id}>
               <div className="nft__item">
                 <div className="author_list_pp">
-                  <Link to="">
-                    <img className="lazy" src={item.authorImage} alt="" />
+                  {/* Ensure this link points to the author's profile */}
+                  <Link to={`/author/${authorId}`}>
+                    <img className="lazy" src={item.authorImage} alt={item.authorName} />
                     <i className="fa fa-check"></i>
                   </Link>
                 </div>
                 <div className="nft__item_wrap">
-                  <Link to={`/item-details/${item.id}`}>
-                    <img src={item.nftImage} className="lazy nft__item_preview" alt="" />
+                  <Link to={`/item-details/${item.nftId}`}>
+                    <img src={item.nftImage} className="lazy nft__item_preview" alt={item.title} />
                   </Link>
                 </div>
                 <div className="nft__item_info">
-                  <Link to={`/item-details/${item.id}`}>
+                  <Link to={`/item-details/${item.nftId}`}>
                     <h4>{item.title}</h4>
                   </Link>
                   <div className="nft__item_price">{item.price} ETH</div>
+                  <div className="nft__item_action">
+                    <span>{item.likes} Likes</span>
+                  </div>
                 </div>
               </div>
             </div>

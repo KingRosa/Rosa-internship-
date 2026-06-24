@@ -11,18 +11,20 @@ const Author = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchAuthor() {
-      try {
-        const { data } = await axios.get(
-          `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${id}`
-        );
-        setAuthor(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching author:", error);
-        setLoading(false);
-      }
+   async function fetchAuthor() {
+    setLoading(true);
+    try {
+      const { data } = await axios.get(
+        `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${id}`
+      );
+      console.log("API DATA:", data); // OPEN YOUR CONSOLE (F12) TO SEE THIS
+      setAuthor(data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching author:", error);
+      setLoading(false);
     }
+  }
     fetchAuthor();
   }, [id]);
 
