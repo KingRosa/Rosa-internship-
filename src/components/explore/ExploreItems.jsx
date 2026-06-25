@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Skeleton from "../../components/UI/Skeleton";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const ExploreItems = () => {
   const [items, setItems] = useState([]);
@@ -21,6 +23,13 @@ const ExploreItems = () => {
       setLoading(false);
     }
   }
+
+  // Refresh AOS whenever data changes so new elements are animated
+  useEffect(() => {
+    if (!loading) {
+      AOS.refresh();
+    }
+  }, [items, visible, loading]);
 
   useEffect(() => {
     fetchItems();
@@ -43,11 +52,13 @@ const ExploreItems = () => {
                 key={item.id} 
                 className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12"
                 style={{ display: "block", minHeight: "300px" }}
+                // Animation applied to each individual card
+                data-aos="fade-up"
+                data-aos-duration="1000"
               >
                 <div className="nft__item">
                   <div className="author_list_pp">
                     <Link to={`/author/${item.authorId}`}>
-                     
                       <img src={item.author_image || item.authorImage} alt="author" />
                       <i className="fa fa-check"></i>
                     </Link>

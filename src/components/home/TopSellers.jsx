@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import AOS from "aos"; // 1. Import AOS
 
 const TopSellers = () => {
   const [sellers, setSellers] = useState([]);
@@ -22,6 +23,13 @@ const TopSellers = () => {
     fetchSellers();
   }, []);
 
+  // 2. Refresh AOS after data loads to register the new list items
+  useEffect(() => {
+    if (!loading) {
+      AOS.refresh();
+    }
+  }, [loading]);
+
   if (loading) return <div className="text-center">Loading sellers...</div>;
 
   return (
@@ -34,7 +42,11 @@ const TopSellers = () => {
           </div>
           
           <div className="col-md-12">
-            <ol className="author_list">
+            <ol 
+              className="author_list"
+              data-aos="fade-up" // 3. Animate the list itself
+              data-aos-duration="1000"
+            >
               {sellers.map((seller) => (
                 <li key={seller.authorId}>
                   <div className="author_list_pp">
