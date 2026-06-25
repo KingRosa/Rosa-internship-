@@ -66,55 +66,65 @@ const ItemDetails = () => {
               />
             </div>
 
-            <div className="col-md-6">
-              <div className="item_details_info">
-                <h2>{item.title}</h2>
+           <div className="col-md-6">
+  <div className="item_details_info">
+    <h2>{item.title}</h2>
 
-                <div
-                  className="item_info_counts"
-                  style={{ margin: "20px 0" }}
-                >
-                  <div
-                    className="item_info_views"
-                    style={{
-                      marginRight: "15px",
-                      display: "inline-block",
-                    }}
-                  >
-                    <i className="fa fa-eye"></i> {item.views}
-                  </div>
+    {/* Counts, Description, and Price move to the top */}
+    <div className="item_info_counts" style={{ margin: "20px 0" }}>
+      <div className="item_info_views" style={{ marginRight: "15px", display: "inline-block" }}>
+        <i className="fa fa-eye"></i> {item.views}
+      </div>
+      <div className="item_info_likes" style={{ display: "inline-block" }}>
+        <i className="fa fa-heart"></i> {item.likes}
+      </div>
+    </div>
 
-                  <div
-                    className="item_info_likes"
-                    style={{ display: "inline-block" }}
-                  >
-                    <i className="fa fa-heart"></i> {item.likes}
-                  </div>
-                </div>
+    <p>{item.description}</p>
 
-                <p>{item.description}</p>
+    <h6>Price</h6>
+    <div className="nft-item-price" style={{ marginBottom: "30px" }}>
+      <h3>{item.price} ETH</h3>
+    </div>
 
-                <h6>Price</h6>
+    {/* Creator and Owner moved to the bottom */}
+    <div className="item_author" style={{ display: "flex", gap: "30px", marginTop: "20px", borderTop: "1px solid #ccc", paddingTop: "20px" }}>
+      <div>
+        <h6>Creator</h6>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <div className="author_list_pp">
+            <Link to={`/author/${item?.creatorId}`}>
+              <img className="lazy" src={item?.creatorImage} alt={item?.creatorName} />
+              <i className="fa fa-check"></i>
+            </Link>
+          </div>
+          <div className="author_list_info" style={{ marginLeft: "10px" }}>
+            <Link to={`/author/${item?.creatorId}`}>{item?.creatorName}</Link>
+          </div>
+        </div>
+      </div>
 
-                <div
-                  className="nft-item-price"
-                  style={{ marginBottom: "30px" }}
-                >
-                  <h3>{item.price} ETH</h3>
-                </div>
+      <div>
+        <h6>Owner</h6>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <div className="author_list_pp">
+            <Link to={`/author/${item?.ownerId}`}>
+              <img className="lazy" src={item?.ownerImage} alt={item?.ownerName} />
+              <i className="fa fa-check"></i>
+            </Link>
+          </div>
+          <div className="author_list_info" style={{ marginLeft: "10px" }}>
+            <Link to={`/author/${item?.ownerId}`}>{item?.ownerName}</Link>
+          </div>
+        </div>
+      </div>
+    </div>
 
-                <Link
-                  to="/"
-                  className="btn-main"
-                  style={{
-                    marginTop: "30px",
-                    display: "inline-block",
-                  }}
-                >
-                  Back to Marketplace
-                </Link>
-              </div>
-            </div>
+    <Link to="/" className="btn-main" style={{ marginTop: "30px", display: "inline-block" }}>
+      Back to Marketplace
+    </Link>
+  </div>
+</div>
           </div>
         </div>
       </section>
